@@ -143,6 +143,32 @@ npm run start      # starts the Express server
 
 ---
 
+## ▲ Deploy to Vercel
+
+The repo is **Vercel-ready with zero configuration** (see `vercel.json`):
+
+- The **frontend** (Vite) builds to `client/dist` and is served as a static SPA.
+- The **backend** runs as a Vercel **serverless function** at `/api/*`
+  (`api/index.mjs` wraps the Express app), so Mona AI works in production too.
+- If the API is ever unavailable, the frontend automatically falls back to an
+  on-device advisor, so the app never breaks.
+
+**Steps:**
+
+1. Push this repo to GitHub (already done).
+2. Go to [vercel.com/new](https://vercel.com/new) → **Import** the `Mona360`
+   repository.
+3. Leave the defaults (Vercel reads `vercel.json`) and click **Deploy**.
+4. _(Optional)_ Add environment variables in Vercel → Project → Settings →
+   Environment Variables:
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — enable real Supabase auth.
+   - `OPENAI_API_KEY` — upgrade Mona AI to a live LLM (optional).
+
+That's it — no build settings to change. You can also deploy from the CLI with
+`npx vercel` (requires a Vercel login/token).
+
+---
+
 ## 🔐 Authentication & Data Modes
 
 Mona360 works in **two modes**:
