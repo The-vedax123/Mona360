@@ -58,8 +58,9 @@ export default function Login() {
 
       {!isSupabaseConfigured && (
         <div className="mt-4 rounded-xl border border-brand-500/30 bg-brand-500/10 p-3 text-xs text-brand-600 dark:text-brand-300">
-          Running in <b>local demo mode</b> — no Supabase keys detected. Accounts are stored in your browser. Use{' '}
-          <b>Try the demo</b> for an instant pre-loaded business.
+          Running in <b>local demo mode</b> (no Supabase keys set). Just enter <b>any email &amp; password</b> and tap
+          Sign in — your account is created on this device automatically. Or tap <b>Try the demo business</b> for an
+          instant pre-loaded business.
         </div>
       )}
 

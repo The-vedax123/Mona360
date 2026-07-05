@@ -109,12 +109,31 @@ export function AuthProvider({ children }) {
       if (error) throw error;
       return data.user;
     }
+    // Local demo mode (no Supabase). Accounts live in this browser only.
     const users = readLocalUsers();
     const found = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-    if (!found || found.password !== password) {
-      throw new Error('Invalid email or password.');
+
+    if (found) {
+      if (found.password !== password) {
+        throw new Error('Incorrect password. In demo mode, accounts are stored only on this device.');
+      }
+      const publicUser = toPublicUser(found);
+      localStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(publicUser));
+      setUser(publicUser);
+      return publicUser;
     }
-    const publicUser = toPublicUser(found);
+
+    // No account yet on this device — provision one on the fly so sign-in
+    // always works in demo mode (this is what "local demo mode" implies).
+    const newUser = {
+      id: `usr_${Math.random().toString(36).slice(2, 12)}`,
+      email,
+      password,
+      full_name: email.split('@')[0],
+      created_at: new Date().toISOString(),
+    };
+    writeLocalUsers([...users, newUser]);
+    const publicUser = toPublicUser(newUser);
     localStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(publicUser));
     setUser(publicUser);
     return publicUser;
