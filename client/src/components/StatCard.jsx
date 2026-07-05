@@ -1,45 +1,63 @@
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
-const TONES = {
-  brand: 'from-brand-500/20 to-brand-500/5 text-brand-500',
-  emerald: 'from-emerald-500/20 to-emerald-500/5 text-emerald-500',
-  amber: 'from-amber-500/20 to-amber-500/5 text-amber-500',
-  red: 'from-red-500/20 to-red-500/5 text-red-500',
-  accent: 'from-accent-500/20 to-accent-500/5 text-accent-500',
+const ICON_TONES = {
+  brand: 'bg-brand-500 text-white',
+  emerald: 'bg-emerald-500 text-white',
+  amber: 'bg-amber-500 text-white',
+  orange: 'bg-orange-500 text-white',
+  red: 'bg-red-500 text-white',
+  accent: 'bg-accent-500 text-white',
+  blue: 'bg-blue-500 text-white',
+  violet: 'bg-violet-500 text-white',
 };
 
-export default function StatCard({ label, value, icon: Icon, tone = 'brand', trend, hint }) {
+const VALUE_TONES = {
+  brand: 'text-brand-600 dark:text-brand-400',
+  emerald: 'text-emerald-600 dark:text-emerald-400',
+  amber: 'text-amber-600 dark:text-amber-400',
+  orange: 'text-orange-600 dark:text-orange-400',
+  red: 'text-red-600 dark:text-red-400',
+  accent: 'text-accent-600 dark:text-accent-400',
+  blue: 'text-blue-600 dark:text-blue-400',
+  violet: 'text-violet-600 dark:text-violet-400',
+};
+
+export default function StatCard({ label, value, icon: Icon, tone = 'brand', trend, hint, colorValue = true }) {
   const positive = trend != null && trend >= 0;
   return (
-    <div className="card p-4 sm:p-5">
-      <div className="flex items-start justify-between">
+    <div className="card p-4 shadow-soft sm:p-5">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-            {label}
+          <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{label}</p>
+          <p
+            className={`mt-2 truncate text-2xl font-extrabold ${
+              colorValue ? VALUE_TONES[tone] : 'text-slate-900 dark:text-white'
+            }`}
+          >
+            {value}
           </p>
-          <p className="mt-2 truncate text-2xl font-extrabold text-slate-900 dark:text-white">{value}</p>
         </div>
         {Icon && (
-          <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${TONES[tone]}`}>
+          <div
+            className={`grid h-12 w-12 shrink-0 place-items-center rounded-full shadow-soft ${ICON_TONES[tone] || ICON_TONES.brand}`}
+          >
             <Icon className="h-5 w-5" />
           </div>
         )}
       </div>
-      {(trend != null || hint) && (
-        <div className="mt-3 flex items-center gap-2 text-xs">
-          {trend != null && (
-            <span
-              className={`inline-flex items-center gap-0.5 font-semibold ${
-                positive ? 'text-emerald-500' : 'text-red-500'
-              }`}
-            >
-              {positive ? <ArrowUpRight className="h-3.5 w-3.5" /> : <ArrowDownRight className="h-3.5 w-3.5" />}
-              {Math.abs(trend).toFixed(1)}%
-            </span>
-          )}
-          {hint && <span className="text-slate-400 dark:text-slate-500">{hint}</span>}
-        </div>
-      )}
+      <div className="mt-3 flex items-center gap-2 text-xs">
+        {hint && <span className="text-slate-400 dark:text-slate-500">{hint}</span>}
+        {trend != null && (
+          <span
+            className={`ml-auto inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 font-semibold ${
+              positive ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/15 text-red-500'
+            }`}
+          >
+            {positive ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+            {Math.abs(trend).toFixed(0)}%
+          </span>
+        )}
+      </div>
     </div>
   );
 }

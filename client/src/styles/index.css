@@ -12,12 +12,15 @@ html {
 }
 
 body {
-  @apply bg-slate-50 text-slate-800 antialiased;
+  @apply text-slate-800 antialiased;
+  background: linear-gradient(180deg, #fdf4ec 0%, #fbf4f0 22%, #f6f7f9 55%, #f4f6f8 100%);
+  background-attachment: fixed;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 .dark body {
   @apply bg-navy-950 text-slate-200;
+  background: #070b18;
 }
 
 /* Thin, themed scrollbars */

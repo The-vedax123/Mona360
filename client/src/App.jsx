@@ -17,6 +17,7 @@ import Invoices from './pages/Invoices.jsx';
 import Wallet from './pages/Wallet.jsx';
 import BusinessPassport from './pages/BusinessPassport.jsx';
 import Reports from './pages/Reports.jsx';
+import Customers from './pages/Customers.jsx';
 import Settings from './pages/Settings.jsx';
 import NotFound from './pages/NotFound.jsx';
 
@@ -93,6 +94,7 @@ export default function App() {
         <Route path="wallet" element={<Wallet />} />
         <Route path="passport" element={<BusinessPassport />} />
         <Route path="reports" element={<Reports />} />
+        <Route path="customers" element={<Customers />} />
         <Route path="settings" element={<Settings />} />
       </Route>
 

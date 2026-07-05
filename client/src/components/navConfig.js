@@ -8,6 +8,7 @@ import {
   Wallet,
   BadgeCheck,
   BarChart3,
+  Users,
   Settings,
 } from 'lucide-react';
 
@@ -21,6 +22,7 @@ export const NAV_ITEMS = [
   { to: '/app/wallet', label: 'Wallet', icon: Wallet },
   { to: '/app/passport', label: 'Passport', icon: BadgeCheck },
   { to: '/app/reports', label: 'Insights', icon: BarChart3 },
+  { to: '/app/customers', label: 'Customers', icon: Users },
   { to: '/app/settings', label: 'Settings', icon: Settings },
 ];
 
