@@ -132,16 +132,50 @@ export function BusinessProvider({ children }) {
     setState((prev) => ({ ...prev, [collection]: prev[collection].filter((r) => r.id !== id) }));
   }, []);
 
-  const resetData = useCallback(() => {
-    if (user?.demo) setState({ ...EMPTY_STATE, ...buildDemoState() });
-    else setState((prev) => ({ ...EMPTY_STATE, business: prev.business }));
-  }, [user]);
+  /** Opt-in: fill the CURRENT business with demo transactional data. */
+  const loadDemoData = useCallback(() => {
+    const demo = buildDemoState();
+    setState((prev) => ({
+      business: prev.business
+        ? {
+            ...prev.business,
+            wallet_address: prev.business.wallet_address || demo.business.wallet_address,
+          }
+        : { ...demo.business },
+      sales: demo.sales,
+      expenses: demo.expenses,
+      inventory: demo.inventory,
+      invoices: demo.invoices,
+      walletTransactions: demo.walletTransactions,
+    }));
+  }, []);
+
+  /** Clear all transactional data but keep the user's business profile. */
+  const clearBusinessData = useCallback(() => {
+    setState((prev) => ({
+      business: prev.business,
+      sales: [],
+      expenses: [],
+      inventory: [],
+      invoices: [],
+      walletTransactions: [],
+    }));
+  }, []);
+
+  /** True when the business has no records at all yet. */
+  const isEmpty =
+    (state.sales?.length || 0) === 0 &&
+    (state.expenses?.length || 0) === 0 &&
+    (state.inventory?.length || 0) === 0 &&
+    (state.invoices?.length || 0) === 0 &&
+    (state.walletTransactions?.length || 0) === 0;
 
   const value = useMemo(
     () => ({
       ...state,
       ready,
       hasBusiness: !!state.business,
+      isEmpty,
       createBusiness,
       updateBusiness,
       connectWallet,
@@ -149,10 +183,11 @@ export function BusinessProvider({ children }) {
       addRecord,
       updateRecord,
       deleteRecord,
-      resetData,
+      loadDemoData,
+      clearBusinessData,
       helpers: { uid, now, today },
     }),
-    [state, ready, createBusiness, updateBusiness, connectWallet, disconnectWallet, addRecord, updateRecord, deleteRecord, resetData]
+    [state, ready, isEmpty, createBusiness, updateBusiness, connectWallet, disconnectWallet, addRecord, updateRecord, deleteRecord, loadDemoData, clearBusinessData]
   );
 
   return <BusinessContext.Provider value={value}>{children}</BusinessContext.Provider>;

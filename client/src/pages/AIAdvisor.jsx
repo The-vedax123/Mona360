@@ -21,14 +21,16 @@ const MODE_META = {
 
 export default function AIAdvisor() {
   const state = useBusiness();
-  const { business } = state;
+  const { business, isEmpty } = state;
   const metrics = useMemo(() => computeMetrics(state), [state]);
   const insights = useMemo(() => generateInsights(state), [state]);
 
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hi ${business?.owner_name?.split(' ')[0] || 'there'} 👋 I'm Mona AI, your business advisor. I continuously monitor ${business?.business_name || 'your business'} — its sales, expenses, profit, inventory, invoices and wallet activity. Ask me anything, or tap a suggestion below.`,
+      content: isEmpty
+        ? `Hi ${business?.owner_name?.split(' ')[0] || 'there'} 👋 I'm Mona AI. I don't have enough business data yet — add your sales, expenses and inventory (or load a demo business from the dashboard) and I'll give you tailored insights.`
+        : `Hi ${business?.owner_name?.split(' ')[0] || 'there'} 👋 I'm Mona AI, your business advisor. I continuously monitor ${business?.business_name || 'your business'} — its sales, expenses, profit, inventory, invoices and wallet activity. Ask me anything, or tap a suggestion below.`,
     },
   ]);
   const [input, setInput] = useState('');

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Building2, Wallet, ArrowRight, LogOut, Check } from 'lucide-react';
+import { Building2, Wallet, ArrowRight, LogOut } from 'lucide-react';
 import { useBusiness } from '../hooks/useBusiness.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useToast } from '../hooks/useToast.jsx';
@@ -35,7 +35,6 @@ export default function CreateBusiness() {
     currency: 'ZMW',
   });
   const [wallet, setWallet] = useState(null);
-  const [seed, setSeed] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -43,8 +42,9 @@ export default function CreateBusiness() {
   const submit = (e) => {
     e.preventDefault();
     setLoading(true);
-    createBusiness({ ...form, wallet_address: wallet }, { seedSampleData: seed });
-    toast.success('Business profile created!');
+    // New businesses always start empty — demo data is opt-in from the dashboard.
+    createBusiness({ ...form, wallet_address: wallet });
+    toast.success('Business profile created! Start by adding your first sale.');
     setTimeout(() => navigate('/app'), 300);
   };
 
@@ -122,19 +122,10 @@ export default function CreateBusiness() {
               {wallet ? `Wallet linked · ${truncateMiddle(wallet)}` : 'Link a business wallet (optional)'}
             </button>
 
-            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 p-3 dark:border-white/10">
-              <span
-                className={`grid h-5 w-5 place-items-center rounded-md border transition ${
-                  seed ? 'border-brand-500 bg-brand-500 text-white' : 'border-slate-300 dark:border-white/20'
-                }`}
-              >
-                {seed && <Check className="h-3.5 w-3.5" />}
-              </span>
-              <input type="checkbox" checked={seed} onChange={(e) => setSeed(e.target.checked)} className="sr-only" />
-              <span className="text-sm text-slate-600 dark:text-slate-300">
-                Prefill with sample data so I can preview the full dashboard immediately
-              </span>
-            </label>
+            <p className="rounded-xl bg-slate-50 p-3 text-xs text-slate-500 dark:bg-white/5 dark:text-slate-400">
+              Your business starts empty. Add your own sales, expenses and inventory — or load an optional
+              demo business anytime from the dashboard to preview everything.
+            </p>
 
             <button type="submit" disabled={loading} className="btn-primary w-full">
               {loading ? 'Creating…' : 'Create business & continue'} <ArrowRight className="h-4 w-4" />

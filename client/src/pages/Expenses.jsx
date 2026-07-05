@@ -63,7 +63,7 @@ export default function Expenses() {
           <EmptyState
             icon={Receipt}
             title="No expenses yet"
-            description="Add your first expense to monitor costs."
+            description="Add your first expense to monitor spending."
             action={<button onClick={() => setOpen(true)} className="btn-primary"><Plus className="h-4 w-4" /> Add Expense</button>}
           />
         )}

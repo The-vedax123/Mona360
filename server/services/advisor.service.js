@@ -8,6 +8,20 @@ function money(amount, currency = 'ZMW') {
   return `${symbol}${Number(amount || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
 
+export const NO_DATA_MESSAGE =
+  "I don't have enough business data yet. Add sales, expenses, and inventory so I can give better insights.";
+
+function hasNoData(m) {
+  return (
+    (m.salesCount || 0) === 0 &&
+    (m.expenseCount || 0) === 0 &&
+    (m.inventoryCount || 0) === 0 &&
+    (m.invoicesIssued || 0) === 0 &&
+    (m.totalRevenue || 0) === 0 &&
+    (m.totalExpenses || 0) === 0
+  );
+}
+
 function riskLevel(m) {
   if (m.netProfit < 0 || m.healthScore < 50) return 'High';
   if (m.healthScore < 70 || m.lowStockProducts.length > 0 || m.unpaidInvoicesCount > 0) return 'Medium';
@@ -191,6 +205,11 @@ export async function getAdvisorResponse({ businessId, message, context }) {
     }
   }
   if (!metrics) metrics = normalizeContext(context || {});
+
+  // Empty business → don't hallucinate. Ask the user to add data.
+  if (hasNoData(metrics)) {
+    return { reply: NO_DATA_MESSAGE, riskLevel: 'Low', mode: 'fallback', source, metrics };
+  }
 
   const businessSummary = buildBusinessSummary(metrics);
   const risk = riskLevel(metrics);

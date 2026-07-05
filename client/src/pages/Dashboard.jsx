@@ -22,6 +22,8 @@ import {
   Boxes,
   ArrowRight,
   Sparkles,
+  Rocket,
+  Plus,
 } from 'lucide-react';
 import Page from '../components/ui/Page.jsx';
 import StatCard from '../components/StatCard.jsx';
@@ -33,6 +35,7 @@ import ExpenseTable from '../components/ExpenseTable.jsx';
 import EmptyState from '../components/EmptyState.jsx';
 import Badge from '../components/ui/Badge.jsx';
 import { useBusiness } from '../hooks/useBusiness.jsx';
+import { useToast } from '../hooks/useToast.jsx';
 import { generateInsights } from '../utils/aiLogic.js';
 import {
   totalRevenue,
@@ -64,7 +67,8 @@ function greeting() {
 }
 
 export default function Dashboard() {
-  const { business, sales, expenses, inventory, invoices, walletTransactions } = useBusiness();
+  const { business, sales, expenses, inventory, invoices, walletTransactions, isEmpty, loadDemoData } = useBusiness();
+  const toast = useToast();
   const chart = useChartTheme();
   const currency = business?.currency || 'ZMW';
 
@@ -94,16 +98,52 @@ export default function Dashboard() {
     0
   );
 
+  const handleLoadDemo = () => {
+    loadDemoData();
+    toast.success('Demo business loaded — explore the full dashboard.');
+  };
+
   return (
     <Page
       title={`${greeting()}, ${business?.owner_name?.split(' ')[0] || 'there'} 👋`}
       subtitle="Here's what's happening in your business today."
       action={
-        <Link to="/app/advisor" className="btn-primary hidden sm:inline-flex">
-          <Sparkles className="h-4 w-4" /> Ask Mona AI
-        </Link>
+        isEmpty ? (
+          <button onClick={handleLoadDemo} className="btn-primary hidden sm:inline-flex">
+            <Rocket className="h-4 w-4" /> Load Demo Business
+          </button>
+        ) : (
+          <Link to="/app/advisor" className="btn-primary hidden sm:inline-flex">
+            <Sparkles className="h-4 w-4" /> Ask Mona AI
+          </Link>
+        )
       }
     >
+      {isEmpty && (
+        <div className="card mb-4 flex flex-col gap-4 border-brand-500/30 bg-gradient-to-br from-brand-500/10 to-accent-500/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-500/15 text-brand-500">
+              <Rocket className="h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 dark:text-white">Your business is ready to build</h3>
+              <p className="mt-0.5 max-w-xl text-sm text-slate-500 dark:text-slate-400">
+                Start by adding your first sale, expense or inventory item — your dashboard and Mona AI
+                insights update in real time. Just presenting? Load an optional demo business to preview
+                everything instantly.
+              </p>
+            </div>
+          </div>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <Link to="/app/sales" className="btn-secondary">
+              <Plus className="h-4 w-4" /> Add a sale
+            </Link>
+            <button onClick={handleLoadDemo} className="btn-primary">
+              <Rocket className="h-4 w-4" /> Load Demo Business
+            </button>
+          </div>
+        </div>
+      )}
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="lg:col-span-1">
           <HealthScoreCard score={metrics.health} />
@@ -137,12 +177,20 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-slate-400">Inventory Risk</p>
-              <p className="font-bold capitalize text-slate-900 dark:text-white">{metrics.risk.level}</p>
+              <p className="font-bold capitalize text-slate-900 dark:text-white">
+                {inventory.length === 0 ? 'No items yet' : metrics.risk.level}
+              </p>
             </div>
           </div>
-          <Badge tone={metrics.risk.level === 'high' ? 'red' : metrics.risk.level === 'medium' ? 'amber' : 'emerald'}>
-            {metrics.risk.lowCount} low
-          </Badge>
+          {inventory.length === 0 ? (
+            <Link to="/app/inventory" className="chip bg-brand-500/15 text-brand-600 dark:text-brand-300">
+              Add items
+            </Link>
+          ) : (
+            <Badge tone={metrics.risk.level === 'high' ? 'red' : metrics.risk.level === 'medium' ? 'amber' : 'emerald'}>
+              {metrics.risk.lowCount} low
+            </Badge>
+          )}
         </div>
       </div>
 
@@ -230,7 +278,16 @@ export default function Dashboard() {
           {sales.length ? (
             <SalesTable sales={sales.slice(0, 5)} currency={currency} />
           ) : (
-            <EmptyState title="No sales yet" description="Record your first sale to get started." />
+            <EmptyState
+              icon={TrendingUp}
+              title="No sales yet"
+              description="Add your first sale to start tracking revenue."
+              action={
+                <Link to="/app/sales" className="btn-primary">
+                  <Plus className="h-4 w-4" /> Add a sale
+                </Link>
+              }
+            />
           )}
         </ChartCard>
 
@@ -241,7 +298,16 @@ export default function Dashboard() {
           {expenses.length ? (
             <ExpenseTable expenses={expenses.slice(0, 5)} currency={currency} />
           ) : (
-            <EmptyState title="No expenses yet" description="Track your first expense to monitor costs." />
+            <EmptyState
+              icon={Receipt}
+              title="No expenses yet"
+              description="Add your first expense to monitor spending."
+              action={
+                <Link to="/app/expenses" className="btn-primary">
+                  <Plus className="h-4 w-4" /> Add an expense
+                </Link>
+              }
+            />
           )}
         </ChartCard>
       </div>

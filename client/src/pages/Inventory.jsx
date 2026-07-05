@@ -103,7 +103,7 @@ export default function Inventory() {
           <EmptyState
             icon={Boxes}
             title="No inventory yet"
-            description="Add products to track stock and get restock alerts."
+            description="Add inventory items to detect stock risks."
             action={<button onClick={() => setOpen(true)} className="btn-primary"><Plus className="h-4 w-4" /> Add Item</button>}
           />
         )}

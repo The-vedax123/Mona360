@@ -95,7 +95,7 @@ export default function Sales() {
           <EmptyState
             icon={ShoppingCart}
             title="No sales found"
-            description="Record your first sale to start tracking revenue."
+            description="Add your first sale to start tracking revenue."
             action={<button onClick={() => setOpen(true)} className="btn-primary"><Plus className="h-4 w-4" /> Add Sale</button>}
           />
         )}

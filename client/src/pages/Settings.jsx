@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Building2, Palette, Bell, Wallet, Save, Trash2, Sun, Moon, LogOut, RefreshCw } from 'lucide-react';
+import { Building2, Palette, Bell, Wallet, Save, Trash2, Sun, Moon, LogOut, Rocket } from 'lucide-react';
 import Page from '../components/ui/Page.jsx';
 import Badge from '../components/ui/Badge.jsx';
 import { useBusiness } from '../hooks/useBusiness.jsx';
@@ -12,7 +12,7 @@ import { generateWalletAddress } from '../utils/blockchain.js';
 const CURRENCIES = ['ZMW', 'USD', 'NGN', 'KES', 'ZAR', 'GBP', 'EUR'];
 
 export default function Settings() {
-  const { business, updateBusiness, connectWallet, disconnectWallet, resetData } = useBusiness();
+  const { business, updateBusiness, connectWallet, disconnectWallet, loadDemoData, clearBusinessData, isEmpty } = useBusiness();
   const { user, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const toast = useToast();
@@ -163,17 +163,28 @@ export default function Settings() {
         </div>
       </div>
 
-      {/* Danger / data */}
+      {/* Data & Account */}
       <div className="card mt-4 p-5">
         <SectionHeader icon={Trash2} title="Data & Account" />
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+          Demo data is optional. Load a sample business to preview or present, or clear everything to start
+          from a clean slate. Your business profile is always kept.
+        </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <button
-            onClick={() => { resetData(); toast.success('Data reset'); }}
+            onClick={() => { loadDemoData(); toast.success('Demo business loaded'); }}
             className="btn-secondary"
           >
-            <RefreshCw className="h-4 w-4" /> Reset demo data
+            <Rocket className="h-4 w-4 text-brand-500" /> Load Demo Business
           </button>
-          <button onClick={signOut} className="btn-secondary text-red-500">
+          <button
+            onClick={() => { clearBusinessData(); toast.info('All business data cleared'); }}
+            disabled={isEmpty}
+            className="btn-secondary text-amber-600 dark:text-amber-400"
+          >
+            <Trash2 className="h-4 w-4" /> Clear Demo Data
+          </button>
+          <button onClick={signOut} className="btn-secondary text-red-500 sm:ml-auto">
             <LogOut className="h-4 w-4" /> Sign out
           </button>
         </div>

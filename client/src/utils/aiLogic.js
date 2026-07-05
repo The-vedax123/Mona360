@@ -233,8 +233,21 @@ export const SUGGESTED_PROMPTS = [
  * (e.g. a static-only deployment). Mirrors the server's format so the demo
  * never breaks, and adapts to the user's question + business metrics.
  */
+export const NO_DATA_MESSAGE =
+  "I don't have enough business data yet. Add sales, expenses, and inventory so I can give better insights.";
+
 export function localAdvisorResponse(metrics, message) {
   const m = metrics || {};
+  const noData =
+    (m.salesCount || 0) === 0 &&
+    (m.expenseCount || 0) === 0 &&
+    (m.inventoryCount || 0) === 0 &&
+    (m.invoicesIssued || 0) === 0 &&
+    (m.totalRevenue || 0) === 0 &&
+    (m.totalExpenses || 0) === 0;
+  if (noData) {
+    return { reply: NO_DATA_MESSAGE, riskLevel: 'Low', mode: 'offline' };
+  }
   const c = m.currency || 'ZMW';
   const sym = { ZMW: 'K', USD: '$', EUR: '€', GBP: '£', NGN: '₦', KES: 'KSh', ZAR: 'R' }[c] || `${c} `;
   const money = (n) => `${sym}${Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
