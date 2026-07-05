@@ -29,8 +29,15 @@ export function computeMetrics(state = {}) {
   const health = businessHealthScore({ sales, expenses, inventory });
   const trust = businessTrustScore({ business, invoices, walletTransactions, healthScore: health });
   const low = lowStockProducts(inventory);
+  const dead = deadStockProducts(inventory, sales);
+  const unpaid = invoices.filter((i) => i.status !== 'paid');
+  const walletBalance = walletTransactions.reduce(
+    (sum, t) => sum + (t.transaction_type === 'received' ? Number(t.amount || 0) : -Number(t.amount || 0)),
+    0
+  );
 
   return {
+    businessName: business.business_name || 'your business',
     currency: business.currency || 'ZMW',
     totalRevenue: revenue,
     totalExpenses: expensesTotal,
@@ -42,11 +49,16 @@ export function computeMetrics(state = {}) {
     bestSellingProduct: bestSellingProduct(sales),
     highestExpenseCategory: highestExpenseCategory(expenses),
     lowStockProducts: low.map((i) => i.product_name),
+    deadStockProducts: dead.map((i) => i.product_name),
     inventoryRiskLevel: risk.level,
     salesCount: sales.length,
     expenseCount: expenses.length,
+    inventoryCount: inventory.length,
     invoicesIssued: invoices.length,
     paidInvoices: invoices.filter((i) => i.status === 'paid').length,
+    unpaidInvoicesCount: unpaid.length,
+    unpaidInvoicesTotal: unpaid.reduce((s, i) => s + Number(i.total_amount || 0), 0),
+    walletBalance,
   };
 }
 
@@ -208,11 +220,93 @@ export function localBusinessReport(metrics) {
 export const SUGGESTED_PROMPTS = [
   'How is my business doing?',
   'What should I improve this week?',
-  'Can I afford to hire someone?',
-  'Which product is performing best?',
+  'Can I afford to restock?',
   'What expenses are too high?',
-  'How can I increase sales?',
+  'Which products need attention?',
+  'How can I increase profit?',
+  'What is my biggest risk?',
+  'Summarize my business today.',
 ];
+
+/**
+ * Client-side structured advisor fallback used when the backend is unreachable
+ * (e.g. a static-only deployment). Mirrors the server's format so the demo
+ * never breaks, and adapts to the user's question + business metrics.
+ */
+export function localAdvisorResponse(metrics, message) {
+  const m = metrics || {};
+  const c = m.currency || 'ZMW';
+  const sym = { ZMW: 'K', USD: '$', EUR: '€', GBP: '£', NGN: '₦', KES: 'KSh', ZAR: 'R' }[c] || `${c} `;
+  const money = (n) => `${sym}${Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+  const t = (message || '').toLowerCase();
+  const loss = (m.netProfit || 0) < 0;
+  const low = m.lowStockProducts || [];
+  const unpaidCount = m.unpaidInvoicesCount || 0;
+
+  const risk = loss || (m.healthScore || 0) < 50 ? 'High' : (m.healthScore || 0) < 70 || low.length || unpaidCount ? 'Medium' : 'Low';
+
+  const findings = [
+    `Revenue: ${money(m.totalRevenue)}`,
+    `Expenses: ${money(m.totalExpenses)}`,
+    `Net ${loss ? 'loss' : 'profit'}: ${money(Math.abs(m.netProfit || 0))} (${(m.profitMargin || 0).toFixed(1)}% margin)`,
+    `Health score: ${m.healthScore || 0}/100`,
+  ];
+  if (low.length) findings.push(`Low stock: ${low.join(', ')}`);
+  if (unpaidCount) findings.push(`Unpaid invoices: ${unpaidCount} worth ${money(m.unpaidInvoicesTotal)}`);
+  if (m.bestSellingProduct) findings.push(`Best seller: ${m.bestSellingProduct}`);
+
+  let summary;
+  const actions = [];
+  if (t.includes('restock') || t.includes('afford')) {
+    summary = loss
+      ? `Restocking is risky — you are operating at a loss of ${money(Math.abs(m.netProfit || 0))}. Prioritise cash first and restock only fast-movers.`
+      : `You can restock carefully. Wallet balance is ${money(m.walletBalance)}. Restock fast-moving items first.`;
+    if (low.length) actions.push(`Restock priority items: ${low.slice(0, 3).join(', ')}.`);
+    if (unpaidCount) actions.push(`Collect ${money(m.unpaidInvoicesTotal)} in unpaid invoices to fund it.`);
+    actions.push('Avoid restocking items that are not selling.');
+  } else if (t.includes('expense') || t.includes('cost')) {
+    const ratio = m.totalRevenue ? (m.totalExpenses / m.totalRevenue) * 100 : 0;
+    summary = `Your expenses are ${money(m.totalExpenses)} — about ${ratio.toFixed(0)}% of revenue. ${m.totalExpenses > m.totalRevenue ? 'That is too high and must be reduced.' : 'That is workable, but watch your biggest category.'}`;
+    if (m.highestExpenseCategory) actions.push(`Review "${m.highestExpenseCategory}", your largest cost.`);
+    actions.push('Pause non-essential spending this week.');
+  } else if (t.includes('product') || t.includes('attention') || t.includes('stock')) {
+    summary = low.length ? `${low.length} product(s) need attention — they are low on stock.` : 'Your product mix looks healthy right now.';
+    if (low.length) actions.push(`Restock soon: ${low.slice(0, 4).join(', ')}.`);
+    if (m.bestSellingProduct) actions.push(`Keep "${m.bestSellingProduct}" well stocked.`);
+  } else if (t.includes('profit') || t.includes('increase')) {
+    summary = loss ? `You are at a loss of ${money(Math.abs(m.netProfit || 0))}. Cut costs and push your best seller to reach profit.` : `Your net profit is ${money(m.netProfit)} at a ${(m.profitMargin || 0).toFixed(1)}% margin. Grow revenue while holding costs.`;
+    if (m.bestSellingProduct) actions.push(`Sell more of "${m.bestSellingProduct}".`);
+    if (m.highestExpenseCategory) actions.push(`Trim "${m.highestExpenseCategory}" to widen margin.`);
+  } else if (t.includes('risk') || t.includes('problem')) {
+    summary = loss ? `Your biggest risk is operating at a loss of ${money(Math.abs(m.netProfit || 0))}.` : low.length ? `Your biggest risk is low stock on ${low.length} product(s).` : `No major risks detected. Health score ${m.healthScore || 0}/100.`;
+    if (unpaidCount) actions.push('Follow up on unpaid invoices.');
+    if (low.length) actions.push(`Restock ${low.slice(0, 3).join(', ')}.`);
+    if (!actions.length) actions.push('Keep monitoring your health score.');
+  } else {
+    summary = loss
+      ? `Your business needs attention. Expenses are higher than revenue, so you are at a loss of ${money(Math.abs(m.netProfit || 0))}. Health score ${m.healthScore || 0}/100.`
+      : `${m.businessName || 'Your business'} is doing well. Net profit ${money(m.netProfit)} at ${(m.profitMargin || 0).toFixed(1)}% margin, health score ${m.healthScore || 0}/100.`;
+    if (unpaidCount) actions.push('Follow up on unpaid invoices to improve cash flow.');
+    if (m.totalExpenses > m.totalRevenue) actions.push('Reduce non-essential expenses this week.');
+    if (low.length) actions.push(`Restock fast movers: ${low.slice(0, 3).join(', ')}.`);
+    if (loss) actions.push('Avoid adding new costs until revenue improves.');
+    else actions.push('Reinvest part of your profit carefully.');
+  }
+
+  const reply = [
+    summary,
+    '',
+    'Key findings:',
+    ...findings.map((f) => `- ${f}`),
+    '',
+    'Recommended actions:',
+    ...actions.map((a, i) => `${i + 1}. ${a}`),
+    '',
+    `Risk level: ${risk}`,
+  ].join('\n');
+
+  return { reply, riskLevel: risk, mode: 'offline' };
+}
 
 /**
  * Local fallback for the advisor chat when the backend is unreachable.

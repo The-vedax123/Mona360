@@ -14,6 +14,7 @@ async function post(path, body) {
 }
 
 export const api = {
+  aiAdvisor: (businessId, message, context) => post('/ai/advisor', { businessId, message, context }),
   aiChat: (message, metrics) => post('/ai/chat', { message, metrics }),
   aiReport: (metrics) => post('/ai/report', { metrics }),
   health: async () => {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { config } from '../config/index.js';
+import { isGeminiConfigured, isSupabaseConfigured } from '../config/index.js';
 
 const router = Router();
 
@@ -7,7 +7,8 @@ router.get('/health', (req, res) => {
   res.json({
     status: 'ok',
     service: 'mona360-api',
-    aiMode: config.openAiApiKey ? 'live' : 'mock',
+    aiProvider: isGeminiConfigured ? 'gemini' : 'fallback',
+    supabase: isSupabaseConfigured ? 'connected' : 'not-configured',
     time: new Date().toISOString(),
   });
 });

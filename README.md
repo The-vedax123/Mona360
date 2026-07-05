@@ -192,16 +192,48 @@ Wallet connection is always **optional** — the entire platform works without W
 
 ---
 
-## 🤖 Mona AI
+## 🤖 Mona AI (Google Gemini)
 
-The Express backend (`server/services/ai.service.js`) contains a deterministic,
-**data-driven** advisor that turns your real metrics into plain-language
-recommendations and reports — perfect for reliable demos.
+Mona AI is a real AI-powered business advisor. It analyses the user's business
+data (sales, expenses, profit, inventory, invoices, wallet activity and health
+score) and responds **dynamically** to each question — no fixed, repeated
+answers.
 
-To upgrade to a real LLM later, set `OPENAI_API_KEY` in `server/.env` and extend
-`ai.service.js` (the endpoints and client wiring are already in place). When the
-backend is unreachable, the client falls back to an on-device advisor so the demo
-never breaks.
+**Endpoint:** `POST /api/ai/advisor`
+
+```jsonc
+// Request
+{ "businessId": "…", "message": "How is my business doing?", "context": { /* client metrics */ } }
+
+// Response
+{ "reply": "…", "riskLevel": "High", "mode": "gemini", "source": "supabase" }
+```
+
+**How it works (server-side):**
+
+1. Resolves business data — from **Supabase** when configured (`SUPABASE_URL` +
+   `SUPABASE_SERVICE_ROLE_KEY`), otherwise from the client-provided `context`.
+2. Calculates total revenue, total expenses, net profit, profit margin,
+   low-stock items, unpaid invoices, best-selling product, highest expense
+   category and the Mona360 Health Score.
+3. Sends a Mona AI system prompt + business summary + the user's question to
+   **Google Gemini**.
+4. Returns a smart, structured response (summary · key findings · recommended
+   actions · risk level).
+
+**Enable Gemini** — set in `server/.env` (never exposed to the frontend; all AI
+requests go through the Node.js backend):
+
+```bash
+GEMINI_API_KEY=your_key_from_https://aistudio.google.com/apikey
+GEMINI_MODEL=gemini-2.0-flash   # optional
+```
+
+**Fallback (no key / API down):** if `GEMINI_API_KEY` is missing or Gemini
+fails, the backend returns a **dynamic rule-based advisor** built from the real
+business data (expenses too high, low stock, unpaid invoices, profit positive,
+etc.). If the backend itself is unreachable (e.g. a static-only deploy), the
+frontend falls back to the same on-device logic — so Mona AI never breaks.
 
 ---
 
