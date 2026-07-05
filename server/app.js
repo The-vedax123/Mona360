@@ -20,8 +20,15 @@ export function createApp() {
     app.use(morgan('dev'));
   }
 
+  // Primary mounts (local dev + when Vercel preserves the original /api path).
   app.use('/api', healthRoutes);
   app.use('/api/ai', aiRoutes);
+
+  // Safety mounts: if a serverless platform strips the /api prefix before
+  // invoking the function, the same routes still resolve. Harmless for an
+  // API-only function and makes the Vercel deploy robust either way.
+  app.use('/', healthRoutes);
+  app.use('/ai', aiRoutes);
 
   app.use(notFound);
   app.use(errorHandler);
