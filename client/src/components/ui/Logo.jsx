@@ -1,4 +1,4 @@
-import { BrainCircuit } from 'lucide-react';
+import { ScanEye } from 'lucide-react';
 
 export default function Logo({ size = 'md', withText = true }) {
   const dim = size === 'lg' ? 'h-11 w-11' : size === 'sm' ? 'h-8 w-8' : 'h-9 w-9';
@@ -8,11 +8,11 @@ export default function Logo({ size = 'md', withText = true }) {
       <div
         className={`grid ${dim} place-items-center rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 text-white shadow-glow`}
       >
-        <BrainCircuit className="h-1/2 w-1/2" />
+        <ScanEye className="h-1/2 w-1/2" />
       </div>
       {withText && (
         <span className={`font-extrabold tracking-tight text-slate-900 dark:text-white ${text}`}>
-          BusinessBrain <span className="text-brand-500">AI</span>
+          Mona<span className="text-brand-500">360</span>
         </span>
       )}
     </div>

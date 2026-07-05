@@ -135,15 +135,15 @@ export function AuthShell({ children }) {
         <Logo />
         <div className="relative max-w-md">
           <h2 className="text-3xl font-extrabold leading-tight">
-            Monitor your business. Make smarter decisions with AI.
+            See Everything. Decide Better.
           </h2>
           <p className="mt-4 text-white/80">
             One beautiful dashboard for sales, expenses, inventory, invoices, cash flow and a
-            blockchain-backed business passport — with an AI advisor that watches your back.
+            blockchain-backed Mona360 Passport — with Mona AI watching your back.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-3 text-center">
             {[
-              ['AI', 'Advisor'],
+              ['Mona', 'AI'],
               ['Web3', 'Trust'],
               ['360°', 'Monitoring'],
             ].map(([a, b]) => (
@@ -154,7 +154,7 @@ export function AuthShell({ children }) {
             ))}
           </div>
         </div>
-        <p className="relative text-sm text-white/60">© {new Date().getFullYear()} BusinessBrain AI</p>
+        <p className="relative text-sm text-white/60">© {new Date().getFullYear()} Mona360</p>
       </div>
 
       {/* Form panel */}

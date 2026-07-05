@@ -192,7 +192,7 @@ export function localBusinessReport(metrics) {
   nextActions.push('Send outstanding invoices promptly to improve cash flow.');
 
   return {
-    title: 'AI Business Report',
+    title: 'Mona AI Report',
     generatedAt: new Date().toISOString(),
     headline: `Health Score ${metrics.healthScore ?? 0}/100 — net ${profit >= 0 ? 'profit' : 'loss'} of ${fmt(Math.abs(profit))} at a ${(metrics.profitMargin || 0).toFixed(1)}% margin.`,
     sections: {

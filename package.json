@@ -1,8 +1,8 @@
 {
-  "name": "businessbrain-ai",
+  "name": "mona360",
   "version": "1.0.0",
   "private": true,
-  "description": "BusinessBrain AI — Monitor Your Business. Make Smarter Decisions with AI.",
+  "description": "Mona360 — See Everything. Decide Better. AI-powered business monitoring platform.",
   "workspaces": [
     "client",
     "server"

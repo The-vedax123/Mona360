@@ -6,7 +6,7 @@ const router = Router();
 router.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'businessbrain-ai-api',
+    service: 'mona360-api',
     aiMode: config.openAiApiKey ? 'live' : 'mock',
     time: new Date().toISOString(),
   });

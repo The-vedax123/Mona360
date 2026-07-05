@@ -23,7 +23,7 @@ export default function BusinessPassportCard({ business, healthScore, trustScore
       <div className="relative">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-white/60">
-            <BadgeCheck className="h-4 w-4 text-accent-400" /> Digital Business Passport
+            <BadgeCheck className="h-4 w-4 text-accent-400" /> Mona360 Passport
           </div>
           <QrCode className="h-9 w-9 text-white/80" />
         </div>

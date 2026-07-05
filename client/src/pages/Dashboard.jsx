@@ -56,6 +56,13 @@ const CASH_ICON = {
   red: 'bg-red-500/15 text-red-500',
 };
 
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good Morning';
+  if (h < 18) return 'Good Afternoon';
+  return 'Good Evening';
+}
+
 export default function Dashboard() {
   const { business, sales, expenses, inventory, invoices, walletTransactions } = useBusiness();
   const chart = useChartTheme();
@@ -89,11 +96,11 @@ export default function Dashboard() {
 
   return (
     <Page
-      title={`Welcome back, ${business?.owner_name?.split(' ')[0] || 'there'} 👋`}
-      subtitle={`Here's how ${business?.business_name} is doing today.`}
+      title={`${greeting()}, ${business?.owner_name?.split(' ')[0] || 'there'} 👋`}
+      subtitle="Here's what's happening in your business today."
       action={
         <Link to="/app/advisor" className="btn-primary hidden sm:inline-flex">
-          <Sparkles className="h-4 w-4" /> Ask AI
+          <Sparkles className="h-4 w-4" /> Ask Mona AI
         </Link>
       }
     >
@@ -105,7 +112,7 @@ export default function Dashboard() {
           <StatCard label="Total Revenue" value={formatCurrency(metrics.revenue, currency)} icon={TrendingUp} tone="emerald" hint={`${sales.length} sales`} />
           <StatCard label="Total Expenses" value={formatCurrency(metrics.exp, currency)} icon={Receipt} tone="amber" hint={`${expenses.length} expenses`} />
           <StatCard label="Net Profit" value={formatCurrency(metrics.profit, currency)} icon={PiggyBank} tone={metrics.profit >= 0 ? 'brand' : 'red'} hint={`${metrics.margin.toFixed(1)}% margin`} />
-          <StatCard label="Wallet Balance" value={formatCurrency(walletBalance, currency)} icon={Wallet} tone="accent" hint="BusinessBrain Wallet" />
+          <StatCard label="Wallet Balance" value={formatCurrency(walletBalance, currency)} icon={Wallet} tone="accent" hint="Mona360 Wallet" />
         </div>
       </div>
 
@@ -204,7 +211,7 @@ export default function Dashboard() {
         <div className="mb-3 flex items-center justify-between">
           <AIInsightHeader />
           <Link to="/app/advisor" className="text-sm font-semibold text-brand-500 hover:underline">
-            Open AI Advisor
+            Open Mona AI
           </Link>
         </div>
         <div className="grid gap-3 md:grid-cols-2">

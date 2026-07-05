@@ -1,5 +1,5 @@
 /**
- * Demo dataset for BusinessBrain AI.
+ * Demo dataset for Mona360.
  * Seeds a realistic Zambian retail business so the app looks alive
  * immediately after sign-up / demo login.
  */

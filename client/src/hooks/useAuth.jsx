@@ -124,7 +124,7 @@ export function AuthProvider({ children }) {
   const signInDemo = useCallback(async () => {
     const demoUser = {
       id: 'usr_demo_newton',
-      email: 'demo@businessbrain.ai',
+      email: 'demo@mona360.ai',
       full_name: 'Newton Banda',
       created_at: new Date().toISOString(),
       demo: true,

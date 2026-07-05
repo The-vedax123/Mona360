@@ -86,7 +86,7 @@ export function cashFlowStatus(sales = [], expenses = []) {
 }
 
 /**
- * Business Health Score (0–100). A weighted blend of profitability, margin,
+ * Mona360 Health Score (0–100). A weighted blend of profitability, margin,
  * inventory health and cash flow.
  */
 export function businessHealthScore({ sales = [], expenses = [], inventory = [] } = {}) {
@@ -122,8 +122,8 @@ export function healthLabel(score) {
 }
 
 /**
- * Business Trust Score (0–100) — the reputation number surfaced on the
- * Business Passport. Blends verification, invoice payment behaviour, wallet
+ * Mona360 Trust Score (0–100) — the reputation number surfaced on the
+ * Mona360 Passport. Blends verification, invoice payment behaviour, wallet
  * activity and overall health.
  */
 export function businessTrustScore({ business = {}, invoices = [], walletTransactions = [], healthScore = 0 } = {}) {

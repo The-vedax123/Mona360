@@ -1,5 +1,5 @@
 -- =============================================================================
--- BusinessBrain AI — Supabase schema
+-- Mona360 — Supabase schema
 -- =============================================================================
 -- Run this in the Supabase SQL editor to enable cloud persistence + auth.
 -- The frontend also works fully WITHOUT this (local demo mode) — this schema

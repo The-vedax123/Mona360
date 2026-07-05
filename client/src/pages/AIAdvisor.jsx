@@ -16,7 +16,7 @@ export default function AIAdvisor() {
     {
       role: 'assistant',
       title: `Hi ${business?.owner_name?.split(' ')[0] || 'there'} 👋`,
-      content: `I'm your AI business advisor. I monitor ${business?.business_name || 'your business'} continuously. Ask me anything about your performance — or tap a suggestion below.`,
+      content: `I'm Mona AI, your business advisor. I monitor ${business?.business_name || 'your business'} continuously. Ask me anything about your performance — or tap a suggestion below.`,
     },
   ]);
   const [input, setInput] = useState('');
@@ -50,7 +50,7 @@ export default function AIAdvisor() {
   };
 
   return (
-    <Page title="AI Advisor" subtitle="Your trusted AI business consultant — you stay in control.">
+    <Page title="Mona AI" subtitle="Your trusted AI business advisor — you stay in complete control.">
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Chat */}
         <div className="card flex h-[70vh] flex-col lg:col-span-2">
@@ -59,7 +59,7 @@ export default function AIAdvisor() {
               <Brain className="h-5 w-5" />
             </div>
             <div>
-              <p className="font-bold text-slate-900 dark:text-white">BusinessBrain Advisor</p>
+              <p className="font-bold text-slate-900 dark:text-white">Mona AI</p>
               <p className="flex items-center gap-1 text-xs text-emerald-500">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Monitoring live data
               </p>
@@ -120,7 +120,7 @@ export default function AIAdvisor() {
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-brand-500" />
             <h3 className="text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-              Live Insights
+              Mona AI Insights
             </h3>
           </div>
           {insights.slice(0, 5).map((ins) => (

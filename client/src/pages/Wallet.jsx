@@ -79,7 +79,10 @@ export default function Wallet() {
   };
 
   return (
-    <Page title="Wallet" subtitle="Your business finance wallet — with verified payment proofs.">
+    <Page
+      title="Mona360 Wallet"
+      subtitle="Your secure business wallet for managing payments, verified transactions and blockchain-backed financial records."
+    >
       {!connected && (
         <div className="card mb-4 flex flex-col items-start justify-between gap-3 border-brand-500/30 bg-brand-500/5 p-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
@@ -221,7 +224,7 @@ export default function Wallet() {
       {/* QR modal */}
       <Modal open={modal === 'qr'} onClose={() => setModal(null)} title="Receive via QR" description="Share this code to receive a payment.">
         <div className="flex flex-col items-center gap-4 py-2">
-          <QrPlaceholder value={business?.wallet_address || 'businessbrain'} />
+          <QrPlaceholder value={business?.wallet_address || 'mona360'} />
           <div className="w-full rounded-xl bg-slate-50 p-3 text-center dark:bg-white/5">
             <p className="text-xs text-slate-400">Your wallet address</p>
             <p className="font-mono text-sm text-slate-700 dark:text-slate-200">{business?.wallet_address ? truncateMiddle(business.wallet_address, 12, 10) : 'Connect a wallet first'}</p>

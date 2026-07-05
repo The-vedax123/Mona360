@@ -1,19 +1,23 @@
-# BusinessBrain AI
+# Mona360
 
-**Monitor Your Business. Make Smarter Decisions with AI.**
+**See Everything. Decide Better.**
+_Monitor. Understand. Grow._
 
-BusinessBrain AI is an AI-powered business monitoring and intelligence platform
-for small and growing businesses. It brings **sales, expenses, inventory,
-invoices, cash flow, wallet activity and business performance** together into one
-beautiful, mobile-first dashboard — with an AI advisor that monitors your
-business, flags risks, predicts trends and recommends actions while **you stay in
-full control**.
+Mona360 is an AI-powered business monitoring platform that gives entrepreneurs a
+complete **360-degree view** of their business. It combines AI-driven insights,
+financial monitoring, inventory intelligence, customer analytics, reporting, and
+a blockchain-powered trust layer to help business owners make informed decisions
+with confidence.
 
-A balanced **Web3 trust layer** adds verifiable records, payment proof, wallet
-identity and a **digital Business Passport** — without any confusing crypto
-jargon.
+- **Mona** — seeing, observing and understanding.
+- **360** — a complete, real-time view of a business.
 
-> This is a production-quality hackathon MVP. It runs **instantly** with a
+Mona360 is **not just an AI chatbot**. It is an AI-powered business monitoring
+platform where **Mona AI** monitors every aspect of your business, surfaces
+intelligent insights, and recommends actions — while you remain in **complete
+control**.
+
+> This is a production-quality startup MVP. It runs **instantly** with a
 > pre-loaded demo business (no setup required), and can be upgraded to real
 > Supabase auth + persistence by adding environment variables.
 
@@ -21,27 +25,46 @@ jargon.
 
 ## ✨ Features
 
-- **Premium landing page** — hero, problem/solution, AI features, Web3 trust
-  layer, business wallet, dashboard preview, pricing and CTA.
-- **Dashboard** — Business Health Score, revenue/expenses/profit, cash-flow
-  status, inventory risk, recent activity, AI recommendations and 3 charts
-  (revenue vs expenses, expenses by category, profit trend).
-- **AI Advisor** — chat interface with suggested prompts and live insight cards.
-  Uses the backend advisor when available, with a smart on-device fallback.
+- **Premium landing page** — hero (_See Everything. Decide Better._), problem/
+  solution, Mona AI features, Web3 trust layer, Mona360 Wallet, dashboard
+  preview, pricing and CTA.
+- **Dashboard** — a time-aware welcome, **Mona360 Health Score**, revenue,
+  expenses, profit, cash-flow status, inventory alerts, wallet summary, Mona AI
+  recommendations and three charts (revenue vs expenses, expenses by category,
+  profit trend).
+- **Mona AI** — chat interface with suggested prompts and live insight cards.
+  Uses the backend advisor when available, with a smart on-device fallback so
+  demos never break. (Ask Mona AI · Mona AI Insights · Mona AI Reports · Mona AI
+  Recommendations · Mona AI Forecasts.)
 - **Sales / Expenses / Inventory** — full CRUD, filtering, best-seller & top
   cost detection, low/dead-stock and high-margin intelligence.
 - **Invoices** — create, mark paid, auto-generated invoice number + blockchain
-  verification hash and status.
-- **Wallet** — business finance wallet with balance, receive/send/QR, verified
-  payment proofs, stablecoin & local-currency placeholders.
-- **Business Passport** — verifiable digital identity with health & trust
-  scores, reputation badge, QR and share.
-- **Reports** — revenue/expense/profit/inventory reports + one-click AI report
-  (what improved, what declined, risks, next actions).
+  invoice verification hash and status.
+- **Mona360 Wallet** — your secure business wallet for payments, verified
+  transactions and blockchain-backed financial records: balance, receive/send/
+  QR, verified payment proofs, stablecoin & local-currency placeholders.
+- **Mona360 Passport** — a portable digital business identity combining business
+  info, AI performance insights, verification status, wallet identity,
+  reputation and blockchain-backed trust in one professional profile.
+- **Mona360 Insights** — intelligent business intelligence (not static reports):
+  revenue/expense/profit/inventory views + a one-click **Mona AI Report** (what
+  improved, what declined, risks, recommended next actions).
 - **Settings** — business profile, owner details, currency, theme, notifications
   and wallet settings.
-- **Dark & light mode, toasts, empty/loading states, bottom nav on mobile,
-  sidebar on desktop.**
+- **Mona360 Health Score & Mona360 Trust Score**, dark & light mode, toasts,
+  empty/loading states, bottom nav on mobile, sidebar on desktop.
+
+---
+
+## 🧠 Scores
+
+- **Mona360 Health Score** — a real-time AI assessment of your business
+  performance based on sales, profitability, cash flow, expenses, inventory
+  health and customer activity (90–100 Excellent · 70–89 Good · 50–69 Warning ·
+  below 50 Critical).
+- **Mona360 Trust Score** — reflects a verified business profile, payment
+  history, invoice verification, business reputation, wallet verification and
+  customer reliability.
 
 ---
 
@@ -50,7 +73,7 @@ jargon.
 | Layer      | Tech                                                        |
 | ---------- | ----------------------------------------------------------- |
 | Frontend   | React 18 + Vite, React Router, Tailwind CSS, Recharts, lucide-react |
-| Backend    | Node.js + Express (AI advisor & report endpoints)           |
+| Backend    | Node.js + Express (Mona AI advisor & report endpoints)      |
 | Auth & DB  | Supabase (optional — local demo mode without it)            |
 | Web3       | Optional wallet connect + demo verification hashes          |
 
@@ -59,12 +82,12 @@ jargon.
 ## 📁 Project Structure
 
 ```
-businessbrain-ai/
+mona360/
 ├── client/                 # React frontend (Vite)
 │   ├── src/
 │   │   ├── components/      # StatCard, HealthScoreCard, ChartCard, tables, cards, nav…
 │   │   ├── pages/           # Landing, auth, Dashboard, Sales, Expenses, Inventory,
-│   │   │                    # Invoices, Wallet, BusinessPassport, Reports, Settings, AIAdvisor
+│   │   │                    # Invoices, Wallet, Passport, Insights (Reports), Settings, Mona AI (AIAdvisor)
 │   │   ├── layouts/         # AppLayout (sidebar + bottom nav)
 │   │   ├── hooks/           # useAuth, useBusiness, useTheme, useToast, useChartTheme
 │   │   ├── services/        # supabaseClient, api
@@ -122,7 +145,7 @@ npm run start      # starts the Express server
 
 ## 🔐 Authentication & Data Modes
 
-BusinessBrain AI works in **two modes**:
+Mona360 works in **two modes**:
 
 1. **Local demo mode (default).** No configuration needed. Accounts and business
    data are stored in the browser (localStorage). The **demo login** seeds the
@@ -143,7 +166,7 @@ Wallet connection is always **optional** — the entire platform works without W
 
 ---
 
-## 🤖 AI Advisor
+## 🤖 Mona AI
 
 The Express backend (`server/services/ai.service.js`) contains a deterministic,
 **data-driven** advisor that turns your real metrics into plain-language
@@ -156,14 +179,17 @@ never breaks.
 
 ---
 
-## ⛓ Blockchain / Web3 Trust Layer
+## ⛓ Blockchain / Trust Layer
 
-Blockchain is used **only where it adds trust**, with business-friendly wording:
+Mona360 is **not a crypto platform**. Blockchain is used, in plain
+business-friendly language, only to provide:
 
 - **Portable business identity** (optional wallet linked to the profile)
-- **Verified payment proof** (every wallet transaction gets a proof hash)
+- **Verified payment records** (every wallet transaction gets a proof)
 - **Invoice verification** (each invoice carries a unique verification hash)
-- **Reputation & Business Passport** (a trust score influenced by verified records)
+- **Digital business credentials** (the Mona360 Passport)
+- **Business reputation** (a trust score influenced by verified records)
+- **Secure wallet integration**
 
 For the MVP these use demo/simulated hashes (see `client/src/utils/blockchain.js`
 and `server/utils/hash.js`). The structure is designed so real on-chain

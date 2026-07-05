@@ -28,7 +28,7 @@ export default function BusinessPassport() {
 
   const share = async () => {
     const url = window.location.href;
-    const text = `${business?.business_name} · Verified on BusinessBrain AI · Trust score ${trustScore}/100`;
+    const text = `${business?.business_name} · Verified on Mona360 · Trust score ${trustScore}/100`;
     try {
       if (navigator.share) {
         await navigator.share({ title: business?.business_name, text, url });
@@ -43,8 +43,8 @@ export default function BusinessPassport() {
 
   return (
     <Page
-      title="Business Passport"
-      subtitle="Your verifiable, portable business identity."
+      title="Mona360 Passport"
+      subtitle="A portable digital business identity, backed by AI insights and blockchain trust."
       action={
         <button onClick={share} className="btn-primary">
           <Share2 className="h-4 w-4" /> Share Passport
@@ -71,7 +71,7 @@ export default function BusinessPassport() {
                 <ShieldCheck className="h-9 w-9" />
               </div>
               <p className="mt-3 text-lg font-extrabold text-slate-900 dark:text-white">{badge.label}</p>
-              <Badge tone={badge.tone} className="mt-1">Trust score {trustScore}/100</Badge>
+              <Badge tone={badge.tone} className="mt-1">Mona360 Trust Score {trustScore}/100</Badge>
             </div>
           </div>
           <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
@@ -84,7 +84,7 @@ export default function BusinessPassport() {
         <StatCard label="Invoices Issued" value={invoices.length} icon={FileText} tone="brand" />
         <StatCard label="Paid Invoices" value={paidInvoices} icon={CheckCircle2} tone="emerald" />
         <StatCard label="Completed Transactions" value={completedTx} icon={Repeat} tone="accent" />
-        <StatCard label="Health Score" value={`${healthScore}/100`} icon={ShieldCheck} tone="amber" />
+        <StatCard label="Mona360 Health Score" value={`${healthScore}/100`} icon={ShieldCheck} tone="amber" />
       </div>
 
       <div className="card mt-4 flex items-start gap-3 border-brand-500/20 bg-brand-500/5 p-5">
@@ -92,9 +92,10 @@ export default function BusinessPassport() {
           <Info className="h-5 w-5" />
         </div>
         <p className="text-sm text-slate-600 dark:text-slate-300">
-          This Business Passport helps customers, suppliers, lenders, and partners verify the credibility of a
-          business using AI-powered performance insights and blockchain-backed records. Your identity is portable
-          and your track record is verifiable — without exposing sensitive financial details.
+          The Mona360 Passport is a portable digital business identity that combines your business information,
+          AI-powered performance insights, verification status, wallet identity, reputation and blockchain-backed
+          trust into a single professional profile — helping customers, suppliers, lenders and partners verify your
+          credibility without exposing sensitive financial details.
         </p>
       </div>
     </Page>

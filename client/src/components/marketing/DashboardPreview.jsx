@@ -10,7 +10,7 @@ export default function DashboardPreview() {
         <span className="h-3 w-3 rounded-full bg-red-400" />
         <span className="h-3 w-3 rounded-full bg-amber-400" />
         <span className="h-3 w-3 rounded-full bg-emerald-400" />
-        <span className="ml-3 text-xs font-medium text-slate-400">BusinessBrain AI · Dashboard</span>
+        <span className="ml-3 text-xs font-medium text-slate-400">Mona360 · Dashboard</span>
       </div>
 
       <div className="grid gap-4 p-4 sm:grid-cols-3 sm:p-6">

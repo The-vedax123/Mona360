@@ -60,10 +60,10 @@ export default function Reports() {
     try {
       const result = await api.aiReport(metrics);
       setReport(result);
-      toast.success('AI report generated');
+      toast.success('Mona AI report generated');
     } catch {
       setReport(localBusinessReport(metrics));
-      toast.info('AI report generated (offline mode)');
+      toast.info('Mona AI report generated (offline mode)');
     } finally {
       setLoading(false);
     }
@@ -71,11 +71,11 @@ export default function Reports() {
 
   return (
     <Page
-      title="Reports"
-      subtitle="Understand your performance at a glance."
+      title="Mona360 Insights"
+      subtitle="Intelligent business intelligence — not just static reports."
       action={
         <button onClick={generate} disabled={loading} className="btn-primary">
-          <Sparkles className="h-4 w-4" /> {loading ? 'Generating…' : 'Generate AI Report'}
+          <Sparkles className="h-4 w-4" /> {loading ? 'Generating…' : 'Generate Mona AI Report'}
         </button>
       }
     >
@@ -91,7 +91,7 @@ export default function Reports() {
         <div className="flex items-center justify-between border-b border-slate-100 bg-brand-500/5 p-5 dark:border-white/5">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-brand-500" />
-            <h3 className="font-bold text-slate-900 dark:text-white">AI Summary Report</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white">Mona AI Report</h3>
           </div>
           {report && <span className="text-xs text-slate-400">Generated just now</span>}
         </div>
@@ -117,7 +117,7 @@ export default function Reports() {
               </div>
               <p className="mt-3 font-semibold text-slate-900 dark:text-white">No report generated yet</p>
               <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-                Click <b>Generate AI Report</b> to get a summary of what improved, what declined, key risks and
+                Click <b>Generate Mona AI Report</b> to get a summary of what improved, what declined, key risks and
                 recommended next actions.
               </p>
             </div>

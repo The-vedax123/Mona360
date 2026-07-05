@@ -1,5 +1,5 @@
 /**
- * BusinessBrain AI — advisor service.
+ * Mona360 — Mona AI advisor service.
  *
  * When no LLM API key is configured, this produces smart, data-driven
  * responses derived from the business metrics the client sends. The intent
@@ -168,7 +168,7 @@ function buildReply(intent, m) {
         health >= 90 ? 'excellent' : health >= 70 ? 'good' : health >= 50 ? 'in a warning zone' : 'critical';
       return {
         title: 'Business overview',
-        message: `Your Business Health Score is ${health}/100 (${label}). Revenue is ${money(
+        message: `Your Mona360 Health Score is ${health}/100 (${label}). Revenue is ${money(
           revenue,
           currency
         )}, expenses ${money(expenses, currency)}, giving a net ${
@@ -233,7 +233,7 @@ export async function generateBusinessReport(m) {
   nextActions.push('Send outstanding invoices promptly to improve cash flow.');
 
   return {
-    title: 'AI Business Report',
+    title: 'Mona AI Report',
     generatedAt: new Date().toISOString(),
     headline: `Health Score ${m.healthScore ?? 0}/100 — net ${profit >= 0 ? 'profit' : 'loss'} of ${money(
       Math.abs(profit),

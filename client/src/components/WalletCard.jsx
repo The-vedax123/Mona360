@@ -9,7 +9,7 @@ export default function WalletCard({ balance, currency = 'ZMW', address, connect
       <div className="relative">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm font-medium text-white/80">
-            <Wallet className="h-4 w-4" /> BusinessBrain Wallet
+            <Wallet className="h-4 w-4" /> Mona360 Wallet
           </div>
           {connected ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold">

@@ -25,7 +25,7 @@ function RequireAuth({ children }) {
   const { hasBusiness, ready } = useBusiness();
   const location = useLocation();
 
-  if (loading) return <LoadingSpinner fullscreen label="Loading BusinessBrain AI…" />;
+  if (loading) return <LoadingSpinner fullscreen label="Loading Mona360…" />;
   if (!isAuthenticated) return <Navigate to="/login" state={{ from: location }} replace />;
   if (ready && !hasBusiness) return <Navigate to="/onboarding" replace />;
   return children;

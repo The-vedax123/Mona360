@@ -19,7 +19,7 @@ export default function HealthScoreCard({ score = 0, subtitle }) {
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/10 blur-2xl" />
       <div className="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
         <HeartPulse className="h-4 w-4 text-brand-500" />
-        Business Health Score
+        Mona360 Health Score
       </div>
       <div className="mt-4 flex items-center gap-5">
         <div className="relative grid place-items-center">
@@ -51,7 +51,7 @@ export default function HealthScoreCard({ score = 0, subtitle }) {
           </span>
           <p className="mt-2 max-w-[16rem] text-sm text-slate-500 dark:text-slate-400">
             {subtitle ||
-              'A weighted blend of profitability, margin, inventory health and cash flow — monitored continuously by AI.'}
+              'A real-time AI assessment of your business performance based on sales, profitability, cash flow, expenses, inventory health and customer activity.'}
           </p>
         </div>
       </div>

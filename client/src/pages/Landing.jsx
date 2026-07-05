@@ -73,15 +73,15 @@ export default function Landing() {
         <div className="mx-auto max-w-3xl text-center">
           <div className="mb-5 flex justify-center">
             <Pill>
-              <Sparkles className="h-3.5 w-3.5" /> AI advisor · Web3 trust · one dashboard
+              <Sparkles className="h-3.5 w-3.5" /> Monitor. Understand. Grow.
             </Pill>
           </div>
           <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl">
-            BusinessBrain <span className="bg-gradient-to-r from-brand-500 to-accent-500 bg-clip-text text-transparent">AI</span>
+            See Everything. <span className="bg-gradient-to-r from-brand-500 to-accent-500 bg-clip-text text-transparent">Decide Better.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            Monitor your business, understand your numbers, and make smarter decisions with AI-powered
-            insights and blockchain-backed trust.
+            Monitor your sales, expenses, inventory, customers, cash flow, and business performance from one
+            intelligent platform powered by AI and strengthened by blockchain-backed trust.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link to="/signup" className="btn-primary w-full px-6 py-3 text-base sm:w-auto">
@@ -164,11 +164,11 @@ export default function Landing() {
           <div className="mx-auto max-w-2xl text-center">
             <Pill>The solution</Pill>
             <h2 className="mt-4 text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
-              One brain for your whole business.
+              A complete 360° view of your business.
             </h2>
             <p className="mt-4 text-slate-600 dark:text-slate-300">
-              BusinessBrain AI brings sales, expenses, inventory, invoices, cash flow and wallet activity
-              together — then an AI advisor watches everything and tells you exactly what to do next.
+              Mona360 brings sales, expenses, inventory, invoices, cash flow and wallet activity
+              together — then Mona AI watches everything and tells you exactly what to do next.
               You stay in full control.
             </p>
           </div>
@@ -193,9 +193,9 @@ export default function Landing() {
       {/* AI features */}
       <Section id="features" className="py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <Pill><Sparkles className="h-3.5 w-3.5" /> AI features</Pill>
+          <Pill><Sparkles className="h-3.5 w-3.5" /> Mona AI features</Pill>
           <h2 className="mt-4 text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
-            Your AI business advisor
+            Meet Mona AI, your business advisor
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-300">
             Not a chatbot bolted on — a monitoring engine that understands your real numbers.
@@ -203,12 +203,12 @@ export default function Landing() {
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {[
-            { icon: TrendingUp, title: 'Business Health Score', text: 'A live 0–100 score blending profit, margin, inventory and cash flow.' },
-            { icon: Brain, title: 'Smart recommendations', text: 'Plain-language actions generated from your actual data — no jargon.' },
+            { icon: TrendingUp, title: 'Mona360 Health Score', text: 'A live 0–100 score blending profit, margin, inventory and cash flow.' },
+            { icon: Brain, title: 'Mona AI Recommendations', text: 'Plain-language actions generated from your actual data — no jargon.' },
             { icon: Boxes, title: 'Inventory intelligence', text: 'Flags low stock, dead stock, high-margin winners and restock needs.' },
-            { icon: BarChart3, title: 'Trend prediction', text: 'Revenue, expense and profit trends visualised over time.' },
+            { icon: BarChart3, title: 'Mona AI Forecasts', text: 'Revenue, expense and profit trends visualised over time.' },
             { icon: ReceiptText, title: 'Expense insight', text: 'Pinpoints your biggest cost centres and where to trim safely.' },
-            { icon: FileText, title: 'AI reports', text: 'One click generates a summary of what improved, declined and what to do next.' },
+            { icon: FileText, title: 'Mona AI Reports', text: 'One click generates a summary of what improved, declined and what to do next.' },
           ].map((c) => (
             <div key={c.title} className="card group p-6 transition hover:-translate-y-1 hover:shadow-glow">
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white">
@@ -282,7 +282,7 @@ export default function Landing() {
             <div className="pointer-events-none absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-br from-brand-500/30 to-accent-500/30 blur-2xl" />
             <div className="rounded-3xl bg-gradient-to-br from-brand-700 via-brand-600 to-accent-600 p-6 text-white shadow-glow">
               <div className="flex items-center justify-between text-sm text-white/80">
-                <span className="inline-flex items-center gap-2"><Wallet className="h-4 w-4" /> BusinessBrain Wallet</span>
+                <span className="inline-flex items-center gap-2"><Wallet className="h-4 w-4" /> Mona360 Wallet</span>
                 <span className="rounded-full bg-white/15 px-2.5 py-1 text-xs">Connected</span>
               </div>
               <p className="mt-6 text-sm text-white/70">Business balance</p>
@@ -308,7 +308,7 @@ export default function Landing() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             { name: 'Starter', price: 'Free', tag: 'For getting started', features: ['Dashboard & health score', 'Sales, expenses & inventory', 'Basic AI insights', 'Demo wallet & passport'], cta: 'Get Started', highlight: false },
-            { name: 'Growth', price: 'K199', per: '/mo', tag: 'For growing businesses', features: ['Everything in Starter', 'Unlimited invoices', 'Advanced AI advisor', 'Verified payment proofs', 'AI reports'], cta: 'Start Growth', highlight: true },
+            { name: 'Growth', price: 'K199', per: '/mo', tag: 'For growing businesses', features: ['Everything in Starter', 'Unlimited invoices', 'Advanced Mona AI', 'Verified payment proofs', 'Mona AI Reports'], cta: 'Start Growth', highlight: true },
             { name: 'Business', price: 'K499', per: '/mo', tag: 'For established teams', features: ['Everything in Growth', 'Full Web3 trust layer', 'Priority support', 'Team access (soon)'], cta: 'Contact Sales', highlight: false },
           ].map((p) => (
             <div
@@ -351,9 +351,9 @@ export default function Landing() {
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-black/10 blur-3xl" />
           <div className="relative">
-            <h2 className="text-3xl font-black sm:text-4xl">Give your business a brain.</h2>
+            <h2 className="text-3xl font-black sm:text-4xl">See everything. Decide better.</h2>
             <p className="mx-auto mt-4 max-w-xl text-white/85">
-              Join BusinessBrain AI and turn scattered numbers into smart decisions — with trust built in.
+              Join Mona360 and turn scattered numbers into smart decisions — with trust built in.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to="/signup" className="btn w-full bg-white px-6 py-3 text-base font-bold text-brand-700 hover:bg-white/90 sm:w-auto">
@@ -372,7 +372,7 @@ export default function Landing() {
         <Section className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <Logo size="sm" />
           <p className="text-sm text-slate-400">
-            © {new Date().getFullYear()} BusinessBrain AI · Monitor your business. Decide smarter.
+            © {new Date().getFullYear()} Mona360 · See Everything. Decide Better.
           </p>
           <div className="flex gap-5 text-sm text-slate-500 dark:text-slate-400">
             <a href="#features" className="hover:text-brand-500">Features</a>

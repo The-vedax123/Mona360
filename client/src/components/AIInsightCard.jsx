@@ -48,7 +48,7 @@ export function AIInsightHeader() {
     <div className="flex items-center gap-2">
       <Sparkles className="h-4 w-4 text-brand-500" />
       <span className="text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        AI Recommendations
+        Mona AI Recommendations
       </span>
     </div>
   );
