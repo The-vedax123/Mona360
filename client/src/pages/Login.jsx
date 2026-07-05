@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Wallet, ArrowRight, Sparkles } from 'lucide-react';
+import { Mail, Lock, Wallet, ArrowRight, ArrowLeft, Sparkles } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useToast } from '../hooks/useToast.jsx';
 import { generateWalletAddress } from '../utils/blockchain.js';
@@ -133,7 +133,9 @@ export function AuthShell({ children }) {
       <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-accent-600 p-10 text-white lg:flex">
         <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 -left-16 h-72 w-72 rounded-full bg-black/10 blur-3xl" />
-        <Logo />
+        <Link to="/" className="relative w-fit rounded-xl transition hover:opacity-90">
+          <Logo />
+        </Link>
         <div className="relative max-w-md">
           <h2 className="text-3xl font-extrabold leading-tight">
             See Everything. Decide Better.
@@ -159,8 +161,18 @@ export function AuthShell({ children }) {
       </div>
 
       {/* Form panel */}
-      <div className="flex w-full items-center justify-center px-5 py-10 lg:w-1/2">
-        <div className="w-full max-w-md">{children}</div>
+      <div className="flex w-full flex-col px-5 py-6 lg:w-1/2">
+        <div>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-sm font-semibold text-slate-600 transition hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to home
+          </Link>
+        </div>
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-md py-6">{children}</div>
+        </div>
       </div>
     </div>
   );
