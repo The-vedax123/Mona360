@@ -78,8 +78,10 @@ export async function askGemini({ businessSummary, message }) {
 
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    const err = new Error(`Gemini request failed (${res.status}): ${detail.slice(0, 200)}`);
-    err.code = 'GEMINI_ERROR';
+    // eslint-disable-next-line no-console
+    console.error(`[MonaAI] Gemini API HTTP ${res.status} for model "${config.geminiModel}": ${detail.slice(0, 300)}`);
+    const err = new Error(`Gemini request failed (${res.status})`);
+    err.code = res.status === 401 || res.status === 403 ? 'AUTH' : 'GEMINI_ERROR';
     throw err;
   }
 

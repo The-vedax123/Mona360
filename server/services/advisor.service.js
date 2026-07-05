@@ -199,15 +199,23 @@ export async function getAdvisorResponse({ businessId, message, context }) {
   if (isGeminiConfigured) {
     try {
       const reply = await askGemini({ businessSummary, message });
+      // eslint-disable-next-line no-console
+      console.log(`[MonaAI] Gemini responded (source=${source}).`);
       return { reply, riskLevel: risk, mode: 'gemini', source, metrics };
     } catch (err) {
-      // Gemini failed — fall back but tell the caller.
+      // Gemini failed — log clearly and fall back gracefully.
+      // eslint-disable-next-line no-console
+      console.error(
+        `[MonaAI] Gemini request failed (code=${err.code || 'UNKNOWN'}): ${err.message} — using data-driven fallback.`
+      );
       const fallback = buildFallbackResponse(metrics, message);
       return { ...fallback, mode: 'fallback', source, error: err.message, metrics };
     }
   }
 
   // 3) No key → rule-based fallback.
+  // eslint-disable-next-line no-console
+  console.warn('[MonaAI] GEMINI_API_KEY is not set — responding with data-driven fallback logic.');
   const fallback = buildFallbackResponse(metrics, message);
   return { ...fallback, mode: 'fallback', source, metrics };
 }

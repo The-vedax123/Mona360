@@ -158,14 +158,26 @@ The repo is **Vercel-ready with zero configuration** (see `vercel.json`):
 1. Push this repo to GitHub (already done).
 2. Go to [vercel.com/new](https://vercel.com/new) → **Import** the `Mona360`
    repository.
-3. Leave the defaults (Vercel reads `vercel.json`) and click **Deploy**.
-4. _(Optional)_ Add environment variables in Vercel → Project → Settings →
-   Environment Variables:
-   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — enable real Supabase auth.
-   - `OPENAI_API_KEY` — upgrade Mona AI to a live LLM (optional).
+3. **Root Directory:** leave it as the **repo root** (do NOT set it to `client`).
+   This is required so Vercel deploys the `/api` serverless backend. Vercel reads
+   the root `vercel.json` automatically.
+   > If you set Root Directory to `client`, only the frontend deploys and Mona AI
+   > runs on the on-device fallback (no Gemini), because `/api` lives outside
+   > `client/`.
+4. Click **Deploy**.
+5. Add environment variables in Vercel → Project → Settings → **Environment
+   Variables**, then redeploy:
+   - `GEMINI_API_KEY` — **enables live Mona AI via Gemini** (server-only).
+   - `GEMINI_MODEL` — optional (default `gemini-2.0-flash`).
+   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` — optional, live business data.
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — optional, real frontend auth.
 
-That's it — no build settings to change. You can also deploy from the CLI with
-`npx vercel` (requires a Vercel login/token).
+**Confirm it's live:** open `https://YOUR-APP.vercel.app/api/health`. It should
+return `{"status":"ok","aiProvider":"gemini", ...}` once `GEMINI_API_KEY` is set
+(or `"aiProvider":"fallback"` when it isn't).
+
+You can also deploy from the CLI with `npx vercel --prod` (requires a Vercel
+login/token).
 
 ---
 
